@@ -109,4 +109,90 @@ const addNewJob = async (req, res) => {
   }
 };
 
-module.exports = { getAllJobs, getSingleJob, addNewJob };
+/**
+ * Update job post
+ */
+const updateJob = async (req, res) => {
+  const { id } = req.params;
+  const {
+    title,
+    jobRole,
+    description,
+    minSalary,
+    maxSalary,
+    jobType,
+    companyName,
+    city,
+    country,
+  } = req.body;
+
+  try {
+    let targetJOb = await db.query("SELECT * from jobs WHERE id = ?", [id]);
+
+    if (targetJOb[0].length == 0) {
+      return res.status(404).send({
+        success: false,
+        msg: "No Job Found to Update",
+      });
+    }
+
+    await db.query(
+      "UPDATE jobs SET title = ?, jobRole = ?, description = ?, minSalary = ?, maxSalary = ?, jobType = ?, companyName = ?, city = ?, country = ? WHERE id = ?",
+      [
+        title,
+        jobRole,
+        description,
+        minSalary,
+        maxSalary,
+        jobType,
+        companyName,
+        city,
+        country,
+        id,
+      ]
+    );
+
+    res.status(200).send({
+      success: true,
+      msg: "Job Update Success",
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      msg: "Internal Server Error",
+      error,
+    });
+  }
+};
+
+/**
+ * Delete Job
+ */
+const deleteJob = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    let targetJOb = await db.query("SELECT * from jobs WHERE id = ?", [id]);
+
+    if (targetJOb[0].length == 0) {
+      return res.status(404).send({
+        success: false,
+        msg: "No Job Found",
+      });
+    }
+
+    await db.query("DELETE FROM jobs WHERE id = ?", [id]);
+    return res.status(200).send({
+      success: true,
+      msg: "Job Delete Success",
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: false,
+      msg: "Internal Server Error",
+      error,
+    });
+  }
+};
+
+module.exports = { getAllJobs, getSingleJob, addNewJob, updateJob, deleteJob };

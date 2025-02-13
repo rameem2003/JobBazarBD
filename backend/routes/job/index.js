@@ -2,6 +2,8 @@ const {
   addNewJob,
   getAllJobs,
   getSingleJob,
+  deleteJob,
+  updateJob,
 } = require("../../controllers/job.controller");
 
 const router = require("express").Router();
@@ -23,5 +25,17 @@ router.get("/job/single/:id", getSingleJob);
  * http://localhost:8000/api/v1/job/create
  */
 router.post("/job/create", addNewJob);
+
+/**
+ * Job Update Route
+ * http://localhost:8000/api/v1/job/update/:id
+ */
+router.patch("/job/update/:id", updateJob);
+
+/**
+ * Delete Job Route
+ * http://localhost:8000/api/v1/job/delete/:id
+ */
+router.delete("/job/delete/:id", deleteJob);
 
 module.exports = router;
