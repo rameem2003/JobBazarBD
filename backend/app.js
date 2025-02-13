@@ -4,6 +4,7 @@ const cors = require("cors");
 const router = require("./routes");
 const morgan = require("morgan");
 const app = express();
+const db = require("./config/db.config");
 
 // all middlewares
 app.use(morgan("dev"));
