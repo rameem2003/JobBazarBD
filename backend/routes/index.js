@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const auth = require("./auth");
+const job = require("./job");
 const baseurl = process.env.baseUrl;
 
 /**
@@ -7,5 +8,11 @@ const baseurl = process.env.baseUrl;
  * http://localhost:8000/api/v1/auth/
  */
 router.use(baseurl, auth);
+
+/**
+ * Job route
+ * http://localhost:8000/api/v1/job/
+ */
+router.use(baseurl, job);
 
 module.exports = router;
