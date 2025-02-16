@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Container from "../common/Container";
 import Flex from "../common/Flex";
 import { Link, NavLink } from "react-router";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { jobReducer } from "../../redux/features/JobSlice";
 
 const Navigation = () => {
+  const dispatch = useDispatch(); // dispatch instance
+  // fetch all jobs http://localhost:8000/api/v1/job/all
+  const fetchAllJobs = async () => {
+    const res = await axios.get("http://localhost:8000/api/v1/job/all");
+    dispatch(jobReducer(res.data.data));
+  };
+
+  useEffect(() => {
+    fetchAllJobs();
+  }, []);
   return (
     <nav className="py-[33px]">
       <Container>

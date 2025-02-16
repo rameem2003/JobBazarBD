@@ -39,7 +39,7 @@ const newApplication = async (req, res) => {
 
       return res.status(201).send({
         success: true,
-        msg: "Your Is Submited Success",
+        msg: "Your Application Is Submited Success",
       });
     } catch (error) {
       return res.status(500).send({

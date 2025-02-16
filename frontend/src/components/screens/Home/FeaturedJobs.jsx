@@ -3,8 +3,10 @@ import Container from "../../common/Container";
 import JobCard from "../../common/JobCard";
 import { Link } from "react-router";
 import Flex from "../../common/Flex";
+import { useSelector } from "react-redux";
 
 const FeaturedJobs = () => {
+  const jobs = useSelector((state) => state.allJobs.jobs);
   return (
     <section className="my-28">
       <Container>
@@ -18,9 +20,9 @@ const FeaturedJobs = () => {
 
         <section className="mt-10">
           <Flex className="items-center justify-between gap-5">
-            <JobCard className="w-[33%]" />
-            <JobCard className="w-[33%]" />
-            <JobCard className="w-[33%]" />
+            {jobs.map((job, i) => (
+              <JobCard data={job} key={i} className="w-[33%]" />
+            ))}
           </Flex>
         </section>
 
