@@ -20,14 +20,14 @@ const FeaturedJobs = () => {
 
         <section className="mt-10">
           <Flex className="items-center justify-between gap-5">
-            {jobs.map((job, i) => (
+            {jobs.slice(0, 3).map((job, i) => (
               <JobCard data={job} key={i} className="w-[33%]" />
             ))}
           </Flex>
         </section>
 
         <div className="mt-10 text-center">
-          <Link className="text-primary text-xl font-medium">
+          <Link to="/jobs" className="text-primary text-xl font-medium">
             View More......
           </Link>
         </div>

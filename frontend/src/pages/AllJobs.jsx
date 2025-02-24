@@ -2,8 +2,10 @@ import React from "react";
 import Container from "../components/common/Container";
 import Flex from "../components/common/Flex";
 import JobCard from "../components/common/JobCard";
+import { useSelector } from "react-redux";
 
 const AllJobs = () => {
+  const jobs = useSelector((state) => state.allJobs.jobs);
   return (
     <main className="py-5">
       <Container>
@@ -15,15 +17,9 @@ const AllJobs = () => {
 
         <section className="mt-10">
           <Flex className="flex-wrap items-center justify-between gap-5">
-            <JobCard className="w-[32%]" />
-            <JobCard className="w-[32%]" />
-            <JobCard className="w-[32%]" />
-            <JobCard className="w-[32%]" />
-            <JobCard className="w-[32%]" />
-            <JobCard className="w-[32%]" />
-            <JobCard className="w-[32%]" />
-            <JobCard className="w-[32%]" />
-            <JobCard className="w-[32%]" />
+            {jobs.map((job, i) => (
+              <JobCard data={job} key={i} className="w-[32%]" />
+            ))}
           </Flex>
         </section>
       </Container>

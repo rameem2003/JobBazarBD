@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   FaMapMarkerAlt,
   FaBriefcase,
@@ -9,10 +9,11 @@ import {
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import Container from "../components/common/Container";
-import Flex from "../components/common/Flex";
+import Swal from "sweetalert2";
 
 const JobDetails = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [jobData, setJobData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [bottomSheet, setBottomSheet] = useState(false);
@@ -61,8 +62,28 @@ const JobDetails = () => {
 
       fromRef.current.reset();
       console.log(res);
+      setBottomSheet(false);
+      Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: "Application submitted successfully!",
+      })
+        .then((result) => {
+          if (result.isConfirmed) {
+            navigate("/");
+          }
+        })
+        .finally(() => {
+          navigate("/");
+        });
     } catch (error) {
+      setBottomSheet(false);
       console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong! Try again later.",
+      });
     }
   };
 
