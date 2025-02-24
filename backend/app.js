@@ -8,7 +8,12 @@ const db = require("./config/db.config");
 
 // all middlewares
 app.use(morgan("dev"));
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173", "http://localhost:5174"],
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("docs"));

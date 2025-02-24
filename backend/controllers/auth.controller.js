@@ -81,8 +81,7 @@ const login = async (req, res) => {
   } else {
     return res.status(500).send({
       success: false,
-      msg: "internal Server Error",
-      error,
+      msg: "Please Fill Up All Fields",
     });
   }
 };

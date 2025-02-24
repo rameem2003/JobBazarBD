@@ -1,14 +1,40 @@
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Email:", email);
     console.log("Password:", password);
+
+    try {
+      let res = await axios.post(
+        "http://localhost:8000/api/v1/auth/login",
+        { email, password },
+        {
+          withCredentials: true,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: error.response.data.msg,
+        text: "Something went wrong!",
+      });
+    }
   };
 
   return (
