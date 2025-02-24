@@ -7,6 +7,8 @@ import Register from "./pages/Register";
 import AllJobs from "./pages/AllJobs";
 import NewJob from "./pages/NewJob";
 import JobDetails from "./pages/JobDetails";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import DashboardHome from "./pages/DashboardHome";
 
 const App = () => {
   return (
@@ -15,8 +17,23 @@ const App = () => {
         <Route path="/" element={<RootLayout />}>
           <Route index element={<Home />} />
           <Route path="/jobs" element={<AllJobs />} />
-          <Route path="/newjob" element={<NewJob />} />
+          <Route
+            path="/newjob"
+            element={
+              <ProtectedRoute>
+                <NewJob />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/details/:id" element={<JobDetails />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <DashboardHome />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>

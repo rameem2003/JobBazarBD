@@ -1,25 +1,62 @@
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  const navigate = useNavigate(); // navigate instance
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState("job_seeker");
+  const [role, setRole] = useState("job_provider");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Name:", name);
     console.log("Email:", email);
     console.log("Password:", password);
     console.log("Role:", role);
+
+    try {
+      let res = await axios.post(
+        "http://localhost:8000/api/v1/auth/register",
+        {
+          name,
+          email,
+          password,
+          role,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      console.log(res);
+
+      Swal.fire({
+        icon: "success",
+        title: res.data.msg,
+        text: "You have successfully registered!",
+      });
+
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: error.response.data.msg,
+        text: "Something went wrong!",
+      });
+    }
   };
 
   return (
     <div className="flex items-center justify-center bg-gray-100 py-28">
       <div className="w-96 rounded-2xl bg-white p-8 shadow-lg">
         <h2 className="text-center text-2xl font-semibold text-[#6300b3]">
-          Register
+          Become a Job Provider
         </h2>
         <form onSubmit={handleSubmit} className="mt-6">
           <div className="mb-4">
@@ -72,7 +109,7 @@ const Register = () => {
           </button>
 
           <p className="mt-5 text-center">
-            Login here
+            Already have an account ? {""}
             <Link className="text-primary" to="/login">
               Login
             </Link>

@@ -4,8 +4,6 @@ import { FaLocationArrow } from "react-icons/fa";
 import { Link } from "react-router";
 
 const JobCard = ({ data, className }) => {
-  console.log(data);
-
   return (
     <div className={` ${className} bg-primary/10 rounded-md px-5 py-[23px]`}>
       <h4 className="text-[18px] font-medium text-black">{data.title}</h4>

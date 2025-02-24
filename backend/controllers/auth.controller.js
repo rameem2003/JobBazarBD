@@ -146,4 +146,14 @@ const register = async (req, res) => {
   }
 };
 
-module.exports = { login, register };
+/**
+ * Verify Job provider
+ */
+const verifyJobProvider = async (req, res) => {
+  res.status(200).send({
+    success: true,
+    msg: "Job Provider Verified",
+  });
+};
+
+module.exports = { login, register, verifyJobProvider };

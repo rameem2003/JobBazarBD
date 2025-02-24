@@ -1,9 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
+import { AccountReducer } from "../redux/features/AuthSlice";
 
 const Login = () => {
+  const dispatch = useDispatch(); // dispatch instance
+  const navigate = useNavigate(); // navigate instance
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -27,6 +31,17 @@ const Login = () => {
       );
 
       console.log(res);
+
+      if (res.data.user.role == "job_provider") {
+        dispatch(AccountReducer(res.data));
+        navigate("/");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "You are not authorized",
+          text: "Only Job Providers are allowed to login!",
+        });
+      }
     } catch (error) {
       console.log(error);
       Swal.fire({
