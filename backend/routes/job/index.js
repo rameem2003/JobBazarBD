@@ -5,6 +5,7 @@ const {
   deleteJob,
   updateJob,
 } = require("../../controllers/job.controller");
+const checkAdminMiddleware = require("../../middlewares/checkAdminMiddleware");
 
 const router = require("express").Router();
 
@@ -24,18 +25,18 @@ router.get("/job/single/:id", getSingleJob);
  * New Job Add Route
  * http://localhost:8000/api/v1/job/create
  */
-router.post("/job/create", addNewJob);
+router.post("/job/create", checkAdminMiddleware, addNewJob);
 
 /**
  * Job Update Route
  * http://localhost:8000/api/v1/job/update/:id
  */
-router.patch("/job/update/:id", updateJob);
+router.patch("/job/update/:id", checkAdminMiddleware, updateJob);
 
 /**
  * Delete Job Route
  * http://localhost:8000/api/v1/job/delete/:id
  */
-router.delete("/job/delete/:id", deleteJob);
+router.delete("/job/delete/:id", checkAdminMiddleware, deleteJob);
 
 module.exports = router;
